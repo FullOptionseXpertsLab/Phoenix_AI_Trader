@@ -47,7 +47,7 @@ private:
    void ResetRuntime()
      {
       m_runtime.robot_state =
-         PHX_ROBOT_UNINITIALIZED;
+         PHX_STATE_UNINITIALIZED;
 
       m_runtime.trading_mode =
          PHX_TRADING_DISABLED;
@@ -92,7 +92,7 @@ private:
         {
          m_capital_health.score = 0.0;
          m_capital_health.state =
-            PHX_CAPITAL_CRITICAL;
+            PHX_CAPITAL_RESTRICTED;
 
          m_capital_health.trading_allowed =
             false;
@@ -159,7 +159,7 @@ private:
       if(m_capital_health.score >= 80.0)
         {
          m_capital_health.state =
-            PHX_CAPITAL_HEALTHY;
+            PHX_CAPITAL_NORMAL;
 
          m_capital_health.trading_allowed =
             true;
@@ -171,7 +171,7 @@ private:
       if(m_capital_health.score >= 60.0)
         {
          m_capital_health.state =
-            PHX_CAPITAL_CAUTION;
+            PHX_CAPITAL_REDUCED_RISK;
 
          m_capital_health.trading_allowed =
             true;
@@ -183,7 +183,7 @@ private:
       if(m_capital_health.score >= 40.0)
         {
          m_capital_health.state =
-            PHX_CAPITAL_WARNING;
+            PHX_CAPITAL_REDUCED_RISK;
 
          m_capital_health.trading_allowed =
             false;
@@ -194,7 +194,7 @@ private:
       else
         {
          m_capital_health.state =
-            PHX_CAPITAL_CRITICAL;
+            PHX_CAPITAL_RESTRICTED;
 
          m_capital_health.trading_allowed =
             false;
@@ -324,7 +324,7 @@ public:
       );
 
       m_runtime.robot_state =
-         PHX_ROBOT_INITIALIZING;
+         PHX_STATE_INITIALIZING;
 
       m_runtime.risk_profile =
          m_config.RiskProfile();
@@ -425,7 +425,7 @@ public:
          );
 
          m_runtime.robot_state =
-            PHX_ROBOT_ERROR;
+            PHX_STATE_ERROR;
 
          m_runtime.last_error =
             "Trading environment validation failed.";
@@ -435,7 +435,7 @@ public:
 
       //--- Initial state
       m_runtime.robot_state =
-         PHX_ROBOT_READY;
+         PHX_STATE_READY;
 
       m_runtime.initialized =
          true;
@@ -477,7 +477,7 @@ public:
       StopAutoTrading();
 
       m_runtime.robot_state =
-         PHX_ROBOT_STOPPED;
+         PHX_STATE_STOPPED;
 
       m_logger.Info(
          "Phoenix Core shutting down."
@@ -505,10 +505,10 @@ public:
       if(m_runtime.emergency_stop)
         {
          if(m_runtime.robot_state !=
-            PHX_ROBOT_EMERGENCY_STOP)
+            PHX_STATE_STOPPING)
            {
             m_runtime.robot_state =
-               PHX_ROBOT_EMERGENCY_STOP;
+               PHX_STATE_STOPPING;
 
             m_runtime.trading_mode =
                PHX_TRADING_DISABLED;
@@ -543,7 +543,7 @@ public:
             false;
 
          m_runtime.robot_state =
-            PHX_ROBOT_PROTECTION;
+            PHX_STATE_PAUSED;
 
          UpdateRuntime();
 
@@ -554,12 +554,12 @@ public:
       if(m_runtime.auto_trading_enabled)
         {
          m_runtime.robot_state =
-            PHX_ROBOT_TRADING;
+            PHX_STATE_RUNNING;
         }
       else
         {
          m_runtime.robot_state =
-            PHX_ROBOT_READY;
+            PHX_STATE_READY;
         }
 
       UpdateRuntime();
@@ -629,7 +629,7 @@ public:
          PHX_TRADING_AUTO;
 
       m_runtime.robot_state =
-         PHX_ROBOT_TRADING;
+         PHX_STATE_RUNNING;
 
       m_logger.Critical(
          "AUTOMATIC TRADING STARTED."
@@ -657,7 +657,7 @@ public:
       if(!m_runtime.emergency_stop)
         {
          m_runtime.robot_state =
-            PHX_ROBOT_READY;
+            PHX_STATE_READY;
         }
 
       m_logger.Warning(
@@ -680,7 +680,7 @@ public:
          PHX_TRADING_DISABLED;
 
       m_runtime.robot_state =
-         PHX_ROBOT_EMERGENCY_STOP;
+         PHX_STATE_STOPPING;
 
       m_logger.Critical(
          "EMERGENCY STOP ACTIVATED."
@@ -705,7 +705,7 @@ public:
          PHX_TRADING_DISABLED;
 
       m_runtime.robot_state =
-         PHX_ROBOT_READY;
+         PHX_STATE_READY;
 
       m_logger.Warning(
          "Emergency stop reset. "
@@ -875,10 +875,10 @@ public:
    //+------------------------------------------------------------------+
    //| Get logger                                                      |
    //+------------------------------------------------------------------+
-   CPhoenixLogger &Logger()
-     {
-      return m_logger;
-     }
+   CPhoenixLogger Logger()
+  {
+   return m_logger;
+  }
 
    //+------------------------------------------------------------------+
    //| Is initialized                                                  |

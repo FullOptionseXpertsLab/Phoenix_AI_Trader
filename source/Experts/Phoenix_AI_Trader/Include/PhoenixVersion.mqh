@@ -16,8 +16,10 @@
 
 //--- Semantic version
 #define PHOENIX_VERSION_MAJOR      0
-#define PHOENIX_VERSION_MINOR      1
+#define PHOENIX_VERSION_MINOR      10
 #define PHOENIX_VERSION_PATCH      0
+
+#define PHX_VERSION_STRING "0.10.0"
 
 //--- Release stage
 #define PHOENIX_RELEASE_STAGE      "ALPHA"

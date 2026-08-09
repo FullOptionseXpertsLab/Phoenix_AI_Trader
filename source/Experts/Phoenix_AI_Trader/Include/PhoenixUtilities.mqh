@@ -327,42 +327,42 @@ public:
    //| Get broker symbol from candidate names                         |
    //+------------------------------------------------------------------+
    static string FindBrokerSymbol(
-      string base_symbol
-   )
+   string base_symbol
+)
+  {
+   //--- Exact match first
+   if(SymbolSelect(base_symbol,true))
+      return base_symbol;
+
+   int total =
+      SymbolsTotal(false);
+
+   for(int i = 0; i < total; i++)
      {
-      //--- Exact match first
-      if(SymbolSelect(base_symbol,true))
-         return base_symbol;
+      string candidate =
+         SymbolName(i,false);
 
-      int total =
-         SymbolsTotal(false);
+      if(candidate == "")
+         continue;
 
-      for(int i = 0; i < total; i++)
+      string upper_candidate = candidate;
+      string upper_base      = base_symbol;
+
+      StringToUpper(upper_candidate);
+      StringToUpper(upper_base);
+
+      //--- Exact text contained in broker symbol
+      if(StringFind(
+            upper_candidate,
+            upper_base
+         ) >= 0)
         {
-         string candidate =
-            SymbolName(i,false);
-
-         if(candidate == "")
-            continue;
-
-         string upper_candidate =
-            StringToUpper(candidate);
-
-         string upper_base =
-            StringToUpper(base_symbol);
-
-         //--- Exact text contained in broker symbol
-         if(StringFind(
-               upper_candidate,
-               upper_base
-            ) >= 0)
-           {
-            return candidate;
-           }
+         return candidate;
         }
-
-      return "";
      }
+
+   return "";
+  }
 
    //+------------------------------------------------------------------+
    //| Find common priority symbol                                    |

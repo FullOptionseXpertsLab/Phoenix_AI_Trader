@@ -215,6 +215,8 @@ enum ENUM_PHOENIX_LOG_LEVEL
    PHX_LOG_ERROR,
    PHX_LOG_CRITICAL
   };
+  
+
 
 #endif // __PHOENIX_ENUMS_MQH__
 //+------------------------------------------------------------------+
