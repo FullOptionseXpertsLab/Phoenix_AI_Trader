@@ -7,3 +7,9 @@ Les modules du projet ;
 Les décisions importantes du projet.
 
 Ainsi, nous conserverons une trace de toutes les décisions techniques.
+
+ -------------------------
+| LES OBJECTIFS DU PROJET |
+ -------------------------
+
+ 
